@@ -7,6 +7,7 @@ import by.htp.libraryapp.dao.LibrarianDAO;
 import by.htp.libraryapp.dao.UserDAO;
 import by.htp.libraryapp.dao.impl.LibrarianDAOimpl;
 import by.htp.libraryapp.dao.impl.UserDAOimpl;
+import by.htp.libraryapp.dao.logic.MainMenuLibDAOFactory;
 import by.htp.libraryapp.daoManagment.DAOManager;
 import by.htp.libraryapp.entity.Librarian;
 import by.htp.libraryapp.entity.User;
@@ -32,6 +33,7 @@ public class MainConsoleController {
 		
 		UserDAO userDao = new UserDAOimpl(connection);
 		LibrarianDAO libDao = new LibrarianDAOimpl(connection);
+		MainMenuLibDAOFactory mainLibMenu = new MainMenuLibDAOFactory(connection);
 		
 		switch (choice) {
 		case 1:	
@@ -44,8 +46,8 @@ public class MainConsoleController {
 			break;
 		case 2:
 			Librarian librarian = libDao.login();
-			if(librarian != null) {
-				// libDao.addReader();
+			if(librarian != null) {		
+				mainLibMenu.showMainLibrarianMenu();
 
 			} else {
 				System.out.println("Sorry, login or password is incorrect");
