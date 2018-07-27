@@ -1,12 +1,14 @@
 package by.htp.libraryapp.controller;
 
 import java.sql.Connection;
-import java.util.List;
 import java.util.Scanner;
 
+import by.htp.libraryapp.dao.LibrarianDAO;
 import by.htp.libraryapp.dao.UserDAO;
+import by.htp.libraryapp.dao.impl.LibrarianDAOimpl;
 import by.htp.libraryapp.dao.impl.UserDAOimpl;
 import by.htp.libraryapp.daoManagment.DAOManager;
+import by.htp.libraryapp.entity.Librarian;
 import by.htp.libraryapp.entity.User;
 
 public class MainConsoleController {
@@ -27,21 +29,27 @@ public class MainConsoleController {
 	}
 
 	public static void selectRole(int choice, Connection connection) {
-
+		
+		UserDAO userDao = new UserDAOimpl(connection);
+		LibrarianDAO libDao = new LibrarianDAOimpl(connection);
+		
 		switch (choice) {
-		case 1:
-			UserDAO userDao = new UserDAOimpl(connection);
+		case 1:	
 			User user = userDao.login();
-
 			if (user != null) {
 				userDao.welcomeUser(user);
-
 			} else {
 				System.out.println("Sorry, ticket number or password is incorrect");
 			}
 			break;
 		case 2:
-			System.out.println("2 hdsadgsadasdasdas");
+			Librarian librarian = libDao.login();
+			if(librarian != null) {
+				// libDao.addReader();
+
+			} else {
+				System.out.println("Sorry, login or password is incorrect");
+			}
 		}
 	}
 
