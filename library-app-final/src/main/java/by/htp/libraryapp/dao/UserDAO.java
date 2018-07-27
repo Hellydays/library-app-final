@@ -4,6 +4,6 @@ import by.htp.libraryapp.entity.User;
 
 public interface UserDAO {
 	
-	User login(String ticketNumber, String password);
+	User login();
 
 }

@@ -7,6 +7,7 @@ import by.htp.libraryapp.dao.BookDAO;
 import by.htp.libraryapp.dao.UserDAO;
 import by.htp.libraryapp.dao.impl.BookDAOimpl;
 import by.htp.libraryapp.dao.impl.UserDAOimpl;
+import by.htp.libraryapp.dao.logic.MainMenuDAOFactory;
 import by.htp.libraryapp.daoManagment.DAOManager;
 import by.htp.libraryapp.entity.Book;
 import by.htp.libraryapp.entity.User;
@@ -19,20 +20,25 @@ public class MainConsoleController {
 		Connection connection = daoManager.connect();
 		
 		UserDAO userDao = new UserDAOimpl(connection);
-		User user = userDao.login("1", "2");
+		User user = userDao.login();
 		
-		BookDAO bookDao = new BookDAOimpl(connection);
-		List<Book> listBook = bookDao.getAllBooks();
+		MainMenuDAOFactory mainMenu = new MainMenuDAOFactory(connection);
 		
+//		BookDAO bookDao = new BookDAOimpl(connection);
+//		List<Book> listBook = bookDao.getAllBooks();
 		
 		if (user != null) {
+			
 			System.out.println(user.toString());
+			mainMenu.showMainMenu();
+		} else {
+			System.out.println("Sorry, ticket number or password is incorrect");
 		}
 		
-		if(listBook != null) {
-			for(Book book : listBook)
-				System.out.println(book.toString());
-		}
+//		if(listBook != null) {
+//			for(Book book : listBook)
+//				System.out.println(book.toString());
+//		}
 
 	}
 
