@@ -10,5 +10,7 @@ public interface UserDAO {
 	User login();
 	
 	List<Book> getExpiredBooks(User user);
+	
+	void welcomeUser(User user);
 
 }

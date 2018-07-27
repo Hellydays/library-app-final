@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import by.htp.libraryapp.dao.BookDAO;
 import by.htp.libraryapp.dao.UserDAO;
+import by.htp.libraryapp.dao.logic.MainMenuDAOFactory;
 import by.htp.libraryapp.daoManagment.GenericDAO;
 import by.htp.libraryapp.entity.Book;
 import by.htp.libraryapp.entity.User;
@@ -52,7 +54,7 @@ public class UserDAOimpl extends GenericDAO<UserDAOimpl> implements UserDAO {
 
 	@Override
 	public User login() {
-		@SuppressWarnings("resource")
+
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("Please enter your ticket number");
@@ -91,6 +93,25 @@ public class UserDAOimpl extends GenericDAO<UserDAOimpl> implements UserDAO {
 		}
 
 		return listBook;
+	}
+
+	@Override
+	public void welcomeUser(User user) {
+		UserDAO userDao = new UserDAOimpl(connection);
+		BookDAO bookDao = new BookDAOimpl(connection);
+		
+		MainMenuDAOFactory mainMenu = new MainMenuDAOFactory(connection);
+
+		List<Book> listExpiredBooks = userDao.getExpiredBooks(user);
+
+		if (listExpiredBooks.size() > 0) {
+			System.out.println("Hi " + user.getName()
+					+ "! Glad to see you again! By the way it's time to bring back next books: ");
+			bookDao.printBooks(listExpiredBooks);
+		}
+
+		mainMenu.showMainMenu();
+		
 	}
 
 }

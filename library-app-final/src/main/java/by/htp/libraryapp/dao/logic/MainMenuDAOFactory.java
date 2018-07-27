@@ -15,7 +15,7 @@ public class MainMenuDAOFactory extends GenericDAO<MainMenuDAOFactory> {
 	}
 	
 	public void showMainMenu() {
-		System.out.println("Please select what would you like to do?");
+		System.out.println("Please select what would you like to do next: ");
 		System.out.println(" - Type 1 to see all the available books");
 		System.out.println(" - Type 2 to search for a certain book");
 		int choice = getChoice();
@@ -33,7 +33,6 @@ public class MainMenuDAOFactory extends GenericDAO<MainMenuDAOFactory> {
 	public String getBookTitle() {
 		Scanner scanner = new Scanner(System.in);	
 		String title = scanner.nextLine();
-		scanner.close();
 		return title;
 		
 	}
@@ -46,6 +45,7 @@ public class MainMenuDAOFactory extends GenericDAO<MainMenuDAOFactory> {
 		case 1: 
 			System.out.println(" *** Books catalog *** ");
 			bookDao.printBooks(bookDao.getAllBooks());
+			showMainMenu();
 			break;
 		case 2:
 			System.out.println("Please enter the book title");
@@ -53,8 +53,10 @@ public class MainMenuDAOFactory extends GenericDAO<MainMenuDAOFactory> {
 			Book book = bookDao.getBook(title);
 			if(book!=null) {
 				bookDao.printBook(book);
+				showMainMenu();
 			} else {
 				System.out.println("Sorry, there is no book with such title");
+				showMainMenu();
 			}
 				
 		}
