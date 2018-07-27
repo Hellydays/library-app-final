@@ -28,7 +28,6 @@ public class LibrarianDAOimpl extends GenericDAO<LibrarianDAOimpl> implements Li
 	public Librarian getLibrarianData(String login, String password) {
 
 		Librarian librarian = null;
-
 		PreparedStatement ps;
 
 		try {
@@ -86,12 +85,16 @@ public class LibrarianDAOimpl extends GenericDAO<LibrarianDAOimpl> implements Li
 
 			ps = connection.prepareStatement(SQL_INSERT_USER);
 			ps.setInt(1, insertId);
+			
 			System.out.println("Ticket number:");
 			ps.setString(2, scanner.nextLine());
+			
 			System.out.println("Password:");
 			ps.setString(3, scanner.nextLine());
+			
 			System.out.println("Name:");
 			ps.setString(4, scanner.nextLine());
+			
 			System.out.println("Surname");
 			ps.setString(5, scanner.nextLine());
 
