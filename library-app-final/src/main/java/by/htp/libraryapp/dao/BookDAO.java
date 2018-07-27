@@ -10,7 +10,7 @@ public interface BookDAO {
 	
 	Book getBook(String title);
 	
-	void printAllBooks(List<Book> listBooks);
+	void printBooks(List<Book> listBooks);
 	
 	void printBook(Book book);
 

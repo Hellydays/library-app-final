@@ -45,7 +45,7 @@ public class BookDAOimpl extends GenericDAO<BookDAOimpl> implements BookDAO {
 	}
 
 	@Override
-	public void printAllBooks(List<Book> listBook) {
+	public void printBooks(List<Book> listBook) {
 		for (Book book : listBook)
 			System.out.println(book.toString());
 	}
