@@ -5,6 +5,7 @@ public class Book {
 	private int id;
 	private String title;
 	private String author;
+	private Boolean isTaken;
 
 	public Book() {
 
@@ -41,12 +42,21 @@ public class Book {
 		this.author = author;
 	}
 
+	public Boolean getIsTaken() {
+		return isTaken;
+	}
+
+	public void setIsTaken(Boolean isTaken) {
+		this.isTaken = isTaken;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((isTaken == null) ? 0 : isTaken.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -67,6 +77,11 @@ public class Book {
 			return false;
 		if (id != other.id)
 			return false;
+		if (isTaken == null) {
+			if (other.isTaken != null)
+				return false;
+		} else if (!isTaken.equals(other.isTaken))
+			return false;
 		if (title == null) {
 			if (other.title != null)
 				return false;
@@ -77,7 +92,7 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", author=" + author + "]";
+		return "Book [id=" + id + ", title=" + title + ", author=" + author + ", isTaken=" + isTaken + "]";
 	}
 
 }

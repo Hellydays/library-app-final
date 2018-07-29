@@ -10,8 +10,14 @@ public interface BookDAO {
 	
 	Book getBook(String title);
 	
+	void addBook();
+	
 	void printBooks(List<Book> listBooks);
 	
 	void printBook(Book book);
-
+	
+	void setIsTakenTrue(Book book);
+	
+	void setIsTakenFalse(Book book);
+	
 }

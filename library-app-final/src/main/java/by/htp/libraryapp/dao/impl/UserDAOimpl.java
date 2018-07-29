@@ -13,13 +13,15 @@ import by.htp.libraryapp.dao.UserDAO;
 import by.htp.libraryapp.dao.logic.MainMenuDAOFactory;
 import by.htp.libraryapp.daoManagment.GenericDAO;
 import by.htp.libraryapp.entity.Book;
+import by.htp.libraryapp.entity.TakenBook;
 import by.htp.libraryapp.entity.User;
 
 public class UserDAOimpl extends GenericDAO<UserDAOimpl> implements UserDAO {
 
 	private static final String SQL_SELECT_USER = "SELECT * FROM Users WHERE ticketNumber = ? AND password = ?";
 	private static final String SQL_SELECT_TAKEN_EXPIRED = "SELECT * FROM Books LEFT JOIN Taken_books on Books.idBooks = Taken_books.idBooks where idUsers = ? AND dateTaken <= NOW() - INTERVAL 30 DAY AND dateReturned IS NULL";
-
+	private static final String SQL_SELECT_ALL_TAKEN = "SELECT * FROM Taken_books where idUsers = ? AND dateReturned IS NULL";
+	
 	public UserDAOimpl(Connection connection) {
 		super(connection);
 	}
@@ -112,6 +114,38 @@ public class UserDAOimpl extends GenericDAO<UserDAOimpl> implements UserDAO {
 
 		mainMenu.showMainMenu();
 		
+	}
+
+	@Override
+	public List<TakenBook> getTakenBooks(User user) {
+			
+		List<TakenBook> listTakenBook = new ArrayList<>();
+			TakenBook takenBook = null;
+
+			PreparedStatement ps;
+
+			try {
+				ps = connection.prepareStatement(SQL_SELECT_ALL_TAKEN);
+				ps.setInt(1, user.getId());
+
+				ResultSet rs = ps.executeQuery();
+
+				while (rs.next()) {
+					takenBook = new TakenBook();
+					takenBook.setId(rs.getInt("idTaken_books"));
+					takenBook.setIdUsers(rs.getInt("idUsers"));
+					takenBook.setIdBooks(rs.getInt("idBooks"));
+					takenBook.setDateTaken(rs.getDate("dateTaken"));
+					takenBook.setDateReturned(rs.getDate("dateReturned"));
+					
+					listTakenBook.add(takenBook);
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			return listTakenBook;
 	}
 
 }
